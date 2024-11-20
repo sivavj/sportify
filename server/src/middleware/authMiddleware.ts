@@ -11,6 +11,7 @@ export const authMiddleware = (
   
   if (!token) {
     res.status(401).json({ message: "No token, authorization denied" });
+    return;
   }
   
   try {
@@ -35,6 +36,7 @@ export const organizerMiddleware = (
     res
       .status(403)
       .json({ message: "Access denied, you must be an organizer" });
+      return;
   }
   next();
 };
