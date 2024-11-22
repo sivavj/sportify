@@ -15,9 +15,11 @@ interface IEvent extends Document {
     type: string;
     price: number;
     quantity: number;
+    availableQuantity: number;
     sold: number;
   }[];
   organizer: Schema.Types.ObjectId;
+  image: string;
 }
 
 const EventSchema = new Schema<IEvent>(
@@ -37,10 +39,12 @@ const EventSchema = new Schema<IEvent>(
         type: { type: String, required: true },
         price: { type: Number, required: true },
         quantity: { type: Number, required: true },
+        availableQuantity: { type: Number, required: true },
         sold: { type: Number, default: 0 },
       },
     ],
     organizer: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    image: { type: String, default: null },
   },
   { timestamps: true }
 );
