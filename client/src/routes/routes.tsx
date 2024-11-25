@@ -1,11 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
 import NotFound from "../pages/404/NotFound";
-import BookingHistory from "../pages/booking-history/routes/BookingHistory";
-import Events from "../pages/events/routes/Events";
-import Login from "../pages/login/routes/Login";
-import Register from "../pages/register/routes/Register";
+import BookingHistory from "../pages/booking-history/BookingHistory";
+import Events from "../pages/events/Events";
+import Register from "../pages/register/Register";
 import ProtectedLayout from "./ProtectedLayout";
 import PublicLayout from "./PublicLayout";
+import Login from "../pages/login/Login";
+import EventDetails from "../pages/events/EventDetails";
+import AddEvent from "../pages/events/AddEvent";
 
 export const router = createBrowserRouter([
   {
@@ -23,7 +25,9 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Events /> },
       { path: "events", element: <Events /> },
-      { path: "booking-history", element: <BookingHistory /> },
+      { path: "events/create", element: <AddEvent /> },
+      { path: "events/:id", element: <EventDetails /> },
+      { path: "bookings", element: <BookingHistory /> },
     ],
   },
   {

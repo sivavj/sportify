@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import useAuthStore from "../store/authStore";
+import BottomHeader from "../components/BottomHeader";
 
 const ProtectedLayout = () => {
   const { isLoggedIn } = useAuthStore();
@@ -10,7 +11,10 @@ const ProtectedLayout = () => {
 
   return (
     <div>
-      <Outlet />
+      <div className="flex flex-col mb-16">
+        <Outlet />
+      </div>
+      <BottomHeader />
     </div>
   );
 };

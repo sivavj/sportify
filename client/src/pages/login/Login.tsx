@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import useAuthStore from "../../../store/authStore";
+import { Link, useNavigate } from "react-router-dom";
+import { useCreate } from "../../hooks";
+import useAuthStore from "../../store/authStore";
 
 interface LoginFormData {
   email: string;
@@ -10,14 +11,21 @@ interface LoginFormData {
 const Login = () => {
   const { login } = useAuthStore();
   const { register, handleSubmit } = useForm<LoginFormData>();
+  const navigate = useNavigate();
+
+  const { mutate } = useCreate("/auth/login", {
+    key: "login",
+    onSuccess: (data: { message: string; token: string }) => {
+      login(data.token);
+      navigate("/events");
+    },
+  });
 
   const onSubmit = (data: LoginFormData) => {
-    console.log("data :", data);
-    // Simulated API response
-    const fakeApiResponse = {
-      accessToken: "your.jwt.token.here", // Replace with a real JWT token
-    };
-    login(fakeApiResponse.accessToken);
+    mutate({
+      email: data.email,
+      password: data.password,
+    });
   };
 
   return (
@@ -28,7 +36,10 @@ const Login = () => {
         </h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
               Email
             </label>
             <input
@@ -40,7 +51,10 @@ const Login = () => {
             />
           </div>
           <div className="mb-6">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
               Password
             </label>
             <input
