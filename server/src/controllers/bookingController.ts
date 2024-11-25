@@ -123,7 +123,7 @@ export const getBookings = async (
     const bookings = await Booking.find(query)
       .skip((+page - 1) * +limit)
       .limit(+limit)
-      .populate("user", "name email");
+      .populate("user", "name email").populate("event", "name description date time location");
 
     const total = await Booking.countDocuments(query);
 
@@ -149,7 +149,7 @@ export const getBooking = async (
     const booking = await Booking.findById(bookingId).populate(
       "user",
       "name email"
-    );
+    ).populate("event", "name description date time location");
 
     if (!booking) {
       res.status(404).json({ message: "Booking not found" });
